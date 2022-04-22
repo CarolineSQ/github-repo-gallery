@@ -2,14 +2,18 @@
 
 //profile information
 const overview = document.querySelector (".overview");
+//list of repos
+const repoList = document.querySelector (".repo-list");
 
 const username = "CarolineSQ";
+
+
 
 //Fetch API Json Data
 const gitUserInfo = async function (){
     const userInfo = await fetch(`https://api.github.com/users/${username}`);
     const data = await userInfo.json();
-    console.log(data);
+    //console.log(data);
     displayUserinfo (data);
 };
 gitUserInfo();
@@ -30,4 +34,23 @@ const displayUserinfo = function (data){
     <p><strong>Number of public repos:</strong> ${data.public_repos}</p>
   </div>`;
   overview.append(div);
+  gitRepos();
+};
+
+//function to fetch the repos
+
+const gitRepos = async function (){
+  const userRepo = await fetch (`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`);
+  const repoData = await userRepo.json();
+  console.log(repoData);
+  displayRepoinfo (repoData);
+};
+//delete it for now --->gitRepos();
+const displayRepoinfo = function(repos){
+for (let repo of repos) {
+   let listItem = document.createElement ("li");
+   listItem.classList.add("repo");
+   listItem.innerHTML = `<h3>${repo.name}</h3>`;
+  repoList.append(listItem);
+}
 };
