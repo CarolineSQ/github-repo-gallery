@@ -11,6 +11,10 @@ const username = "CarolineSQ";
 const reposSection = document.querySelector(".repos");
 //repo data Section
 const repoDataSection = document.querySelector(".repo-data");
+//Back to repo gallery button
+const backButton = document.querySelector(".view-repos");
+//input "search by name"
+const filterInput = document.querySelector(".filter-repos");
 
 //Fetch API Json Data
 const gitUserInfo = async function (){
@@ -91,11 +95,18 @@ const displayRepoInfo = function(repoInfo,languages){
   const divItem = document.createElement("div");
   divItem.innerHTML = `<h3>Name: ${repoInfo.name}</h3>
  <p>Description: ${repoInfo.description}</p>
-  <p>Default Branch: ${repoInfo.branch}</p>
+  <p>Default Branch: ${repoInfo.default_branch}</p>
   <p>Languages: ${languages.join(", ")}</p>
   <a class="visit" href="${repoInfo.html_url}" target="_blank" rel="noreferrer noopener">View Repo on GitHub!</a>`;
 repoDataSection.append (divItem);
 repoDataSection.classList.remove ("hide");
 reposSection.classList.add ("hide");
+backButton.classList.remove("hide");
 };
 
+//back button
+backButton.addEventListener ("click",function(e){
+  reposSection.classList.remove ("hide");
+  repoDataSection.classList.add ("hide");
+  backButton.classList.add("hide");
+});
