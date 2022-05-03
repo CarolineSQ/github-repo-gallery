@@ -54,6 +54,8 @@ const gitRepos = async function (){
 };
 //delete it for now --->gitRepos();
 const displayRepos = function(repos){
+  //display the filter Input element
+  filterInput.classList.remove("hide");
 for (let repo of repos) {
    let listItem = document.createElement ("li");
    listItem.classList.add("repo");
@@ -110,3 +112,21 @@ backButton.addEventListener ("click",function(e){
   repoDataSection.classList.add ("hide");
   backButton.classList.add("hide");
 });
+//add an Input event to the search box
+
+filterInput.addEventListener ("input",function (e){
+  const searchValue = e.target.value;
+  console.log (searchValue);
+  const repos = document.querySelectorAll (".repo");
+  const searchValueLC = searchValue.toLowerCase();
+
+  for (const repo of repos){
+    const repoLC = repo.innerText.toLowerCase()
+    if (repoLC.includes (searchValueLC)){
+      repo.classList.remove("hide");
+    }else { 
+      repo.classList.add("hide");
+    }
+    }
+  });
+
